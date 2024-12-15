@@ -4,13 +4,12 @@ const AssignedAgencies = {
     async createAssignment(data) {
         const query = `
             INSERT INTO assigned_agencies 
-            (agency_id, child_id, status, remarks) 
-            VALUES (?, ?, ?, ?)`;
+            (agency_id, child_id, status) 
+            VALUES (?, ?, ?)`;
         const [result] = await pool.execute(query, [
             data.agencyId,
             data.childId,
             data.status || 'Active', // Default to 'Active'
-            data.remarks || null,   // Default to null if no remarks
         ]);
         return result.insertId;
     },
@@ -36,11 +35,10 @@ const AssignedAgencies = {
     async updateAssignedAgency(agencyId, childId, updateData) {
         const query = `
             UPDATE assigned_agencies 
-            SET status = ?, remarks = ? 
+            SET status = ? 
             WHERE agency_id = ? AND child_id = ?`;
         await pool.execute(query, [
             updateData.status,
-            updateData.remarks,
             agencyId,
             childId,
         ]);
