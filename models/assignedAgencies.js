@@ -16,9 +16,22 @@ const AssignedAgencies = {
 
     async getAssignmentsByAgency(agencyId) {
         const query = `
-            SELECT * 
-            FROM assigned_agencies 
-            WHERE agency_id = ?`;
+            SELECT 
+                aa.id AS assignment_id,
+                aa.child_id,
+                aa.assigned_date,
+                aa.status,
+                a.agency_name,
+                a.location,
+                a.contact_info
+            FROM 
+                assigned_agencies AS aa
+            JOIN 
+                agencies AS a 
+            ON 
+                aa.agency_id = a.id
+            WHERE 
+                aa.agency_id = ?`;
         const [rows] = await pool.execute(query, [agencyId]);
         return rows;
     },

@@ -30,6 +30,19 @@ const assignedAgenciesController = {
         }
     },
 
+    async getAssignmentsWithAgencyDetails(req, res) {
+        try {
+            const agencyId = req.params.agencyId;
+            const assignments = await AssignedAgencies.getAssignmentsByAgency(agencyId);
+            res.status(200).json({
+                message: 'Assignments retrieved with agency details',
+                data: assignments,
+            });
+        } catch (err) {
+            res.status(500).json({ error: err.message });
+        }
+    },
+
     async update(req, res) {
         try {
             const { agencyId, childId } = req.params;

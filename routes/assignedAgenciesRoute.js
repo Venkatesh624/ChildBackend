@@ -8,6 +8,9 @@ router.post('/', assignedAgenciesController.create);
 // Get assignments by agency ID
 router.get('/agency/:agencyId', assignedAgenciesController.getByAgency);
 
+// Get assignments by agency ID with agency details
+router.get('/agency/:agencyId/details', assignedAgenciesController.getAssignmentsWithAgencyDetails);
+
 // Get assignments by child ID
 router.get('/child/:childId', assignedAgenciesController.getByChild);
 
